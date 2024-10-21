@@ -72,7 +72,7 @@ This will:
 ## How It Works
 
 - The Go code reads the Kubernetes deployment YAML file using `ioutil.ReadFile`.
-- The YAML is unmarshalled into a Kubernetes `Deployment` object using `yaml.Unmarshal`.
+- The YAML is unmarshalled into a Kubernetes `Deployment`.
 - It then uses the Kubernetes client-go package to connect to the Kubernetes cluster via kubeconfig and deploys the parsed deployment object using `clientset.AppsV1().Deployments().Create()`.
 - The successful creation of the deployment is logged to the console.
 
