@@ -19,7 +19,7 @@ Install the necessary Go packages to interact with the Kubernetes API and work w
 ```bash
 go get k8s.io/client-go@v0.23.0
 go get k8s.io/api@v0.23.0
-go get sigs.k8s.io/yaml
+go get k8s.io/apimachinery@v0.23.0
 ```
 
 ### 2. Prepare the Deployment YAML
