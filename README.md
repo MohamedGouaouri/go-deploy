@@ -76,16 +76,4 @@ This will:
 - It then uses the Kubernetes client-go package to connect to the Kubernetes cluster via kubeconfig and deploys the parsed deployment object using `clientset.AppsV1().Deployments().Create()`.
 - The successful creation of the deployment is logged to the console.
 
-## Troubleshooting
-
-1. **Invalid kubeconfig file path**:
-   - Ensure the kubeconfig path is correct. The default location is `~/.kube/config`.
-   
-2. **Kubernetes access issues**:
-   - Ensure your kubeconfig file has the correct permissions to access the cluster and that your cluster is up and running.
-
-3. **YAML Parsing Issues**:
-   - Ensure your `deployment.yaml` file follows the correct Kubernetes deployment syntax.
-
-
 
