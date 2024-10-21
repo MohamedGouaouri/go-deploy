@@ -1,7 +1,3 @@
-Here’s a **README** for your project:
-
----
-
 # Kubernetes Deployment using Go
 
 This project is a Go application that reads a Kubernetes deployment YAML file from the local file system and deploys it to a Kubernetes cluster using the official Kubernetes Go client (`client-go`). The Kubernetes cluster is accessed via a kubeconfig file, which is typically located at `~/.kube/config`.
