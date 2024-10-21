@@ -3,36 +3,36 @@ package main
 import (
 	"context"
 	"fmt"
-	"io/ioutil"
 	"log"
-
+	"os"
 	"path/filepath"
 
-	"gopkg.in/yaml.v2"
 	appsv1 "k8s.io/api/apps/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/util/yaml"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/util/homedir"
 )
 
 func main() {
-	// Read the deployment YAML file from the local file system
-	filePath := "./tests/deployment.yaml" // Path to your deployment YAML file
-	yamlFile, err := ioutil.ReadFile(filePath)
+	// Read the deployment YAML file
+	filePath := "./tests/deployment.yaml"
+	yamlFile, err := os.Open(filePath)
 	if err != nil {
-		log.Fatalf("Error reading YAML file: %v", err)
+		log.Fatalf("Error opening YAML file: %v", err)
 	}
+	defer yamlFile.Close()
 
-	// Parse the YAML into a Kubernetes Deployment object
+	// Decode the YAML into a Kubernetes Deployment object
+	decoder := yaml.NewYAMLOrJSONDecoder(yamlFile, 100)
 	var deployment appsv1.Deployment
-	err = yaml.Unmarshal(yamlFile, &deployment)
-	if err != nil {
-		log.Fatalf("Error parsing YAML file: %v", err)
+	if err = decoder.Decode(&deployment); err != nil {
+		log.Fatalf("Error decoding YAML file: %v", err)
 	}
 
-	// Set up the Kubernetes client
-	kubeconfig := filepath.Join(homedir.HomeDir(), ".kube", "config") // Path to your kubeconfig file
+	// Set up Kubernetes client using kubeconfig
+	kubeconfig := filepath.Join(homedir.HomeDir(), ".kube", "config")
 	config, err := clientcmd.BuildConfigFromFlags("", kubeconfig)
 	if err != nil {
 		log.Fatalf("Error loading kubeconfig: %v", err)
